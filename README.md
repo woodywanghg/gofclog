@@ -1,1 +1,2 @@
 # gofclog
+1
