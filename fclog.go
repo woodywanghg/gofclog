@@ -11,7 +11,7 @@ import "strings"
 
 var fcLog *FCLog
 
-func GetFcLog() {
+func GetFcLog() *FCLog {
 	if fcLog == nil {
 		fcLog = new(FCLog)
 	}
