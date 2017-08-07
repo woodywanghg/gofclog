@@ -9,6 +9,16 @@ import "time"
 import "runtime"
 import "strings"
 
+var fcLog *FCLog
+
+func GetFcLog() {
+	if fcLog == nil {
+		fcLog = new(FCLog)
+	}
+
+	return fcLog
+}
+
 type FCLog struct {
 	logFile       *os.File
 	bPrintConsole bool
