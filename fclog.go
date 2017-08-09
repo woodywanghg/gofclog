@@ -9,7 +9,7 @@ import "time"
 import "runtime"
 import "strings"
 
-var fcLog *FCLog
+var fcLog *FCLog = nil
 
 func GetFcLog() *FCLog {
 	if fcLog == nil {
