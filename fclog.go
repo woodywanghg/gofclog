@@ -34,11 +34,12 @@ type FCLog struct {
 }
 
 const (
-	LEVEL_NONE    = 0
+	LEVEL_ALL     = 0
 	LEVEL_DEBUG   = 1
 	LEVEL_INFO    = 2
 	LEVEL_WARNING = 3
 	LEVEL_ERROR   = 4
+	LEVEL_NONE    = 5
 )
 
 func (l *FCLog) InitFCLog(bPrintConsole bool, bWriteFile bool, logName string, fileSizeByte int64, level int) bool {
