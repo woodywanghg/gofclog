@@ -178,17 +178,17 @@ func Init(bPrintConsole bool, bWriteFile bool, logName string, fileSizeByte int6
 }
 
 func DEBUG(format string, v ...interface{}) {
-	GetFcLog().Debug(format, v)
+	GetFcLog().Debug(format, v...)
 }
 
 func INFO(format string, v ...interface{}) {
-	GetFcLog().Info(format, v)
+	GetFcLog().Info(format, v...)
 }
 
 func WARN(format string, v ...interface{}) {
-	GetFcLog().Warning(format, v)
+	GetFcLog().Warning(format, v...)
 }
 
 func ERROR(format string, v ...interface{}) {
-	GetFcLog().Error(format, v)
+	GetFcLog().Error(format, v...)
 }
