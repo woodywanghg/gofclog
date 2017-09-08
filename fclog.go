@@ -42,7 +42,26 @@ const (
 	LEVEL_NONE    = 5
 )
 
-func (l *FCLog) InitFCLog(bPrintConsole bool, bWriteFile bool, logName string, fileSizeByte int64, level int) bool {
+func (l *FCLog) CheckLogsDir() error {
+	_, err := os.Stat("./logs")
+	if err == nil {
+		return nil
+	}
+
+	if os.IsNotExist(err) {
+		return os.Mkdir("./logs", 0770)
+	}
+
+	return nil
+}
+
+func (l *FCLog) InitFCLog(bPrintConsole bool, bWriteFile bool, logName string, fileSizeByte int64, level int) error {
+
+	err := l.CheckLogsDir()
+	if err != nil {
+		return err
+	}
+
 	l.bPrintConsole = bPrintConsole
 	l.bWriteFile = bWriteFile
 	l.logFile = nil
@@ -54,16 +73,15 @@ func (l *FCLog) InitFCLog(bPrintConsole bool, bWriteFile bool, logName string, f
 	l.logLevel = level
 
 	if l.bWriteFile {
-		var err error
 		l.logFile, err = os.Create(l.logPath + ".log")
 		if err != nil {
-			return false
+			return err
 		}
 
 		l.logFileName = l.logPath + ".log"
 	}
 
-	return true
+	return nil
 }
 
 func (l *FCLog) SetLogLevel(level int) {
@@ -100,7 +118,7 @@ func (l *FCLog) Write(format string, level string, v ...interface{}) {
 	defer l.lockConsole.Unlock()
 
 	curTime := time.Now()
-	_, file, line, _ := runtime.Caller(2)
+	_, file, line, _ := runtime.Caller(3)
 	index := strings.LastIndex(file, "/")
 	subFile := file[index+1 : len(file)]
 
@@ -153,4 +171,24 @@ func (l *FCLog) Write(format string, level string, v ...interface{}) {
 		l.logFile.WriteString("\n")
 
 	}
+}
+
+func Init(bPrintConsole bool, bWriteFile bool, logName string, fileSizeByte int64, level int) error {
+	return GetFcLog().InitFCLog(bPrintConsole, bWriteFile, logName, fileSizeByte, level)
+}
+
+func DEBUG(format string, v ...interface{}) {
+	GetFcLog().Debug(format, v)
+}
+
+func INFO(format string, v ...interface{}) {
+	GetFcLog().Info(format, v)
+}
+
+func WARN(format string, v ...interface{}) {
+	GetFcLog().Warning(format, v)
+}
+
+func ERROR(format string, v ...interface{}) {
+	GetFcLog().Error(format, v)
 }
