@@ -137,7 +137,7 @@ func (l *FCLog) Write(format string, level string, v ...interface{}) {
 			levelColor = "\x1b[0;31m" + level + "\x1b[0m"
 		}
 
-		fmt.Printf("%d-%02d-%02d %02d:%02d:%02d:%03d %s:%d %s ", curTime.Year(), curTime.Month(), curTime.Day(), curTime.Hour(), curTime.Minute(), curTime.Second(), curTime.Nanosecond(), subFile, line, levelColor)
+		fmt.Printf("%d-%02d-%02d %02d:%02d:%02d:%09d %s:%d %s ", curTime.Year(), curTime.Month(), curTime.Day(), curTime.Hour(), curTime.Minute(), curTime.Second(), curTime.Nanosecond(), subFile, line, levelColor)
 		fmt.Printf(format, v...)
 		fmt.Printf("\n")
 	}
@@ -165,7 +165,7 @@ func (l *FCLog) Write(format string, level string, v ...interface{}) {
 			}
 		}
 
-		outputStr := fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d:%03d %s:%d %s ", curTime.Year(), curTime.Month(), curTime.Day(), curTime.Hour(), curTime.Minute(), curTime.Second(), curTime.Nanosecond(), subFile, line, level)
+		outputStr := fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d:%09d %s:%d %s ", curTime.Year(), curTime.Month(), curTime.Day(), curTime.Hour(), curTime.Minute(), curTime.Second(), curTime.Nanosecond(), subFile, line, level)
 		l.logFile.WriteString(outputStr)
 		l.logFile.WriteString(fmt.Sprintf(format, v...))
 		l.logFile.WriteString("\n")
